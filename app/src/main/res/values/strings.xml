@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Tic Tac Toe - Compose</string>
+    <string name="winner_text">Winner: %1$s</string>
+    <string name="turn_text">Turn: %1$s</string>
+    <string name="draw_text">Draw</string>
+    <string name="reset">Reset</string>
 </resources>

@@ -11,12 +11,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tictactoe_compose.viewmodel.TicTacToeViewModel
 import com.example.tictactoe_compose.model.Player
-
+import androidx.compose.ui.res.stringResource
+import com.example.tictactoe_compose.R
 
 @Composable
 fun TicTacToeScreen(viewModel: TicTacToeViewModel = viewModel()) {
     val state by viewModel.state.collectAsState()
-
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -24,12 +24,13 @@ fun TicTacToeScreen(viewModel: TicTacToeViewModel = viewModel()) {
         verticalArrangement = Arrangement.Center
     ) {
 
+        val winner = state.winner
 
         Text(
             text = when {
-                state.winner != null -> "Winner: ${state.winner}"
-                state.isDraw -> "Draw"
-                else -> "Turn: ${state.currentPlayer}"
+                winner != null -> stringResource(R.string.winner_text, winner.name)
+                state.isDraw -> stringResource(R.string.draw_text)
+                else -> stringResource(R.string.turn_text, state.currentPlayer.name)
             },
             style = MaterialTheme.typography.headlineMedium
         )
@@ -48,7 +49,7 @@ fun TicTacToeScreen(viewModel: TicTacToeViewModel = viewModel()) {
 
 
         Button(onClick = viewModel::resetGame) {
-            Text("Reset")
+            Text(stringResource(R.string.reset))
         }
     }
 }
