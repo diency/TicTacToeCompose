@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tictactoe_compose.viewmodel.TicTacToeViewModel
@@ -48,8 +49,16 @@ fun TicTacToeScreen(viewModel: TicTacToeViewModel = viewModel()) {
         Spacer(Modifier.height(16.dp))
 
 
-        Button(onClick = viewModel::resetGame) {
-            Text(stringResource(R.string.reset))
+        Button(
+            onClick = viewModel::resetGame,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        ) {
+            Text(
+                text = stringResource(R.string.reset),
+                color = MaterialTheme.colorScheme.onPrimary
+            )
         }
     }
 }
@@ -68,12 +77,22 @@ private fun Board(
                     Box(
                         modifier = Modifier
                             .size(80.dp)
-                            .border(1.dp, MaterialTheme.colorScheme.onBackground)
+                            .border(
+                                width = 1.dp,
+                                color = MaterialTheme.colorScheme.outline,
+                                shape = MaterialTheme.shapes.medium
+                            )
                             .clickable { onCellClick(index) },
                         contentAlignment = Alignment.Center
                     ) {
+                        val symbolColor = when (board[index]) {
+                            Player.X -> MaterialTheme.colorScheme.primary
+                            Player.O -> MaterialTheme.colorScheme.secondary
+                            null -> Color.Unspecified
+                        }
                         Text(
                             text = board[index]?.name ?: "",
+                            color = symbolColor,
                             style = MaterialTheme.typography.headlineLarge
                         )
                     }
